@@ -21,7 +21,7 @@ def register_user(request):
             form.save()
             user = User.objects.get(email=form.cleaned_data['email'])
             new_pass = PasswordHistory.objects.get_or_create(user=user, password_hash=user.password)
-            new_pass.save()
+            new_pass[0].save()
             return redirect('login')
     else:
         form = CustomUserCreationForm()
@@ -71,7 +71,7 @@ def change_password(request, user_id):
             attempts.login_attempts = 0
             attempts.save()
             new_pass = PasswordHistory.objects.get_or_create(user=user, password_hash=user.password)
-            new_pass.save()
+            new_pass[0].save()
             return redirect('dashboard')
     else:
         user = User.objects.get(id=user_id)
@@ -90,7 +90,7 @@ def change_password_no_id(request):
             attempts.login_attempts = 0
             attempts.save()
             new_pass = PasswordHistory.objects.get_or_create(user=user, password_hash=user.password)
-            new_pass.save()
+            new_pass[0].save()
             return redirect('dashboard')
     else:
         form = CustomPasswordChangeForm(request.user)
