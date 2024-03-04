@@ -1,0 +1,101 @@
+/* Global Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f8f8;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+/* Form Container Styles */
+.container {
+    width: 400px;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 80vh;
+}
+
+/* Heading Styles */
+h2 {
+    color: #333333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Form Styles */
+form {
+    width: 100%;
+    flex-grow: 1;
+}
+
+/* Label Styles */
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555555;
+}
+
+/* Input and Button Styles */
+input, button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+}
+
+/* Input Focus Styles */
+input:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+/* Button Styles */
+button {
+    background-color: #3498db;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Button Hover Styles */
+button:hover {
+    background-color: #258cd1;
+}
+
+/* List Styles */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+/* List Item Styles */
+li {
+    margin-bottom: 12px;
+    background-color: #ffffff;
+    padding: 12px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Anchor Styles */
+a {
+    text-decoration: none;
+    color: #3498db;
+}
+
+/* Anchor Hover Styles */
+a:hover {
+    color: #258cd1;
+}

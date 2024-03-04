@@ -1,0 +1,35 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Communication LTD Dashboard</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <div>
+        <h2>Communication LTD Dashboard</h2>
+
+        <h3>Customers</h3>
+        <ul>
+            {% for customer in customers %}
+                <li>{{ customer.name }} - {{ customer.email }}</li>
+            {% endfor %}
+        </ul>
+
+        <!-- Button to add a new customer -->
+        <a href="{% url 'add_customer' %}">
+            <button type="button">Add New Customer</button>
+        </a>
+
+        <h3>Change Password</h3>
+        <form method="post" action="{% url 'change_password_no_id'%}">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button type="submit">Reset Password</button>
+        </form>
+    </div>
+</body>
+</html>
