@@ -11,7 +11,7 @@ def dashboard(request):
 def add_customer(request):
     if request.method == 'POST':
         '''
-        ___Customer.objects.raw(request.text())___
+        ___Customer.objects.raw(request.text())___ -> this is not exactly correct. it needs to build  a sql query from requst.POST. youll figure it out
 
         request.text() can be good; "ADD Customer email:viktor@blal, name:vik" -> adds a new customer
                 but can also be bad; "DELETE *"                                -> deletes a customer
