@@ -12,6 +12,7 @@
     <div>
         <h2>Add Customer</h2>
         <form action="{% url 'add_customer' %}" method="post">
+            {% csrf_token %}
 
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>

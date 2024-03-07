@@ -15,13 +15,11 @@ def add_customer(request):
         name = request.POST.get('username', '')
         email = request.POST.get('email', '')
 
-        # Basic input validation (you should customize this based on your requirements)
         if not name or not email:
             return render(request, 'add_customer.html')
 
         else:
-            # Save data to the database using raw SQL query
             with connection.cursor() as cursor:
-                cursor.executescript("INSERT INTO portal_customer VALUES (NULL, "+name+", '"+email+"')")
+                cursor.executescript("insert into portal_customer(name, email) values('{0}', '{1}')".format(name, email))
         return redirect('dashboard')
     return render(request, 'add_customer.html')
