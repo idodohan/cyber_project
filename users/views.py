@@ -1,41 +1,60 @@
+import datetime
 import hashlib
-
+from django.db import connection
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
 from django.conf import settings
-from .forms import CustomUserCreationForm, CustomPasswordChangeForm
+from .forms import CustomPasswordChangeForm
 from .models import LoginAttempts, PasswordHistory
 
 
 def register_user(request):
     if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            if User.objects.filter(email=form.cleaned_data['email']).exists() or User.objects.filter(
-                    username=form.cleaned_data['username']).exists():
-                form = CustomUserCreationForm()
-                return render(request, 'registration.html', {'form': form})
-            form.save()
-            user = User.objects.get(email=form.cleaned_data['email'])
-            new_pass = PasswordHistory.objects.get_or_create(user=user, password_hash=user.password)
-            new_pass[0].save()
+        username = request.POST.get('username', '')
+        email = request.POST.get('email', '')
+        password = request.POST.get('password', '')
+
+        if not username or not email or not password:
+            return render(request, 'registration.html')
+        else:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    "INSERT INTO auth_user (username, email, password, is_superuser, is_staff, is_active, first_name, last_name, date_joined) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                    [username, email, password, False, False, True, '', '', datetime.datetime.now()]
+                )
             return redirect('login')
     else:
-        form = CustomUserCreationForm()
-
-    return render(request, 'registration.html', {'form': form})
+        return render(request, 'registration.html')
 
 
 def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
+        user = None
         try:
-            user = User.objects.get(username=username)
-        except:
+            with connection.cursor() as cursor:
+                cursor.execute("SELECT * FROM auth_user WHERE username = '%s'" % (username))
+                row = cursor.fetchone()
+
+                if row:
+                    user = User(
+                        id=row[0],
+                        password=row[1],
+                        last_login=row[2],
+                        is_superuser=row[3],
+                        username=row[4],
+                        last_name=row[5],
+                        email=row[6],
+                        is_staff=row[7],
+                        is_active=row[8],
+                        date_joined=row[9],
+                        first_name=row[10]
+                    )
+        except Exception as e:
             messages.error(request, 'Invalid username or password')
             return render(request, 'login.html')
         if user is not None:
