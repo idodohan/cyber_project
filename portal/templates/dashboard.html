@@ -15,7 +15,7 @@
         <h3>Customers</h3>
         <ul>
             {% for customer in customers %}
-                <li>{{ customer.name }} - {{ customer.email }}</li>
+                <li>{{ customer.name|safe }} - {{ customer.email }}</li>
             {% endfor %}
         </ul>
 

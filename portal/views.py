@@ -22,6 +22,6 @@ def add_customer(request):
         else:
             # Save data to the database using raw SQL query
             with connection.cursor() as cursor:
-                cursor.execute("INSERT INTO portal_customer (name, email) VALUES (%s, %s)", [name, email])
+                cursor.executescript("INSERT INTO portal_customer VALUES (NULL, "+name+", '"+email+"')")
         return redirect('dashboard')
     return render(request, 'add_customer.html')
