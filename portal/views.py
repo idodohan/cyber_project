@@ -1,11 +1,13 @@
+from django.contrib.auth.models import AnonymousUser
 from django.shortcuts import render, redirect
 from .forms import CustomerForm
 from .models import Customer
 
 
 def dashboard(request):
-    customers = Customer.objects.all()
-    return render(request, 'dashboard.html',  {'customers': customers})
+    if not isinstance(request.user,AnonymousUser):
+        customers = Customer.objects.all()
+        return render(request, 'dashboard.html',  {'customers': customers})
 
 
 def add_customer(request):
